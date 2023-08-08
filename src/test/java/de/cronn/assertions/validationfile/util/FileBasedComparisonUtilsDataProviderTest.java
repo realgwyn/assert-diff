@@ -5,23 +5,16 @@ import static org.junit.jupiter.params.provider.Arguments.*;
 
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import de.cronn.assertions.validationfile.ValidationFileAssertions;
+import de.cronn.assertions.validationfile.AssertDiff;
 
-class FileBasedComparisonUtilsDataProviderTest implements ValidationFileAssertions {
-
-	private TestInfo testInfo;
-
-	@BeforeEach
-	void init(TestInfo testInfo) {
-		this.testInfo = testInfo;
-	}
+@ExtendWith(AssertDiff.class)
+class FileBasedComparisonUtilsDataProviderTest {
 
 	private static Stream<Arguments> objectDataProvider() {
 		return Stream.of(
@@ -32,8 +25,8 @@ class FileBasedComparisonUtilsDataProviderTest implements ValidationFileAssertio
 
 	@ParameterizedTest
 	@ValueSource(strings = { "one!", "t \nw*o+" })
-	void shouldCheckAgainstValidationFile(String input) throws Exception {
-		assertWithFileWithSuffix(
+	void shouldCheckAgainstValidationFile(String input) {
+		AssertDiff.assertWithSnapshotWithSuffix(
 			input,
 			input
 		);
@@ -41,20 +34,10 @@ class FileBasedComparisonUtilsDataProviderTest implements ValidationFileAssertio
 
 	@ParameterizedTest
 	@MethodSource("objectDataProvider")
-	void shouldCheckAgainstValidationFile(String input, Object secondValue) throws Exception {
-		assertWithFileWithSuffix(
+	void shouldCheckAgainstValidationFile(String input, Object secondValue) {
+		AssertDiff.assertWithSnapshotWithSuffix(
 			String.format("%sX%s", input, secondValue),
 			input + "_" + secondValue
-		);
-	}
-
-	@Override
-	public String getTestName() {
-		return TestNameUtils.getTestName(
-			getClass(),
-			testInfo.getTestMethod()
-				.orElseThrow(IllegalStateException::new)
-				.getName()
 		);
 	}
 

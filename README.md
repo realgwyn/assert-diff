@@ -1,5 +1,5 @@
-[![CI](https://github.com/cronn/validation-file-assertions/workflows/CI/badge.svg)](https://github.com/cronn/validation-file-assertions/actions)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.cronn/validation-file-assertions/badge.svg)](http://maven-badges.herokuapp.com/maven-central/de.cronn/validation-file-assertions)
+TODO[![CI](https://github.com/cronn/validation-file-assertions/workflows/CI/badge.svg)](https://github.com/cronn/validation-file-assertions/actions)
+TODO[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.cronn/validation-file-assertions/badge.svg)](http://maven-badges.herokuapp.com/maven-central/de.cronn/validation-file-assertions)
 [![Apache 2.0](https://img.shields.io/github/license/cronn/validation-file-assertions.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Valid Gradle Wrapper](https://github.com/cronn/validation-file-assertions/workflows/Validate%20Gradle%20Wrapper/badge.svg)](https://github.com/cronn/validation-file-assertions/actions/workflows/gradle-wrapper-validation.yml)
 
@@ -7,6 +7,7 @@
 ### TODOs:
 
 [x] Refactor ValidationFileAssertions interface into AssertDiff static class  
+[x] Fix all tests  
 [ ] change package name from `de.cronn.assertions.validationfile` to `de.cronn.assertdiff`  
 [ ] AssertDiff should be a static builder with configuration methods (withName, withNameSuffix, withOutputDir, withOutputActualDir, withOutputExpectedDir, withFieldMasking(json field masker), withMasking(regex masker))  
 [ ] custom output file name  
@@ -25,7 +26,43 @@
 
 
 
-### Idea shown by example
+
+-------------------------
+
+# AssertDiff - file based object assertions for Java
+
+Idea of AssertDiff can be explained in 3 simple steps:
+
+Instead of this:
+```java
+TODO: asserting every single pojo field with junit/assertj
+```
+
+Do this:
+```java
+TODO usage of AssertDiff
+```
+
+POJO Snapshot, png of diff
+```json
+
+```
+
+Then if your test fails, you will get this:
+<image of diff>
+
+And to fix your test, you can do this:
+<gif of saving new value in diff viewer>
+
+
+
+
+
+-------------------------
+
+
+
+### Save snapshot of your object
 
 Let’s consider the following test:
 

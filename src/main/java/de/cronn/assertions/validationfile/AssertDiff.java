@@ -21,38 +21,28 @@ import java.lang.reflect.Method;
 
 public class AssertDiff implements BeforeEachCallback, AfterEachCallback {
 
-	private static ThreadLocal<String> currentTestName = ThreadLocal.withInitial(() -> null);
-
-//	private static ThreadLocal<SimpleTestInfo> testInfo = ThreadLocal.withInitial(() -> null);
+	private static ThreadLocal<SimpleTestInfo> testInfo = ThreadLocal.withInitial(() -> null);
 
 	@Override
 	public void beforeEach(ExtensionContext context) {
-		currentTestName.set(
-			context.getTestClass().map(clazz -> clazz.getSimpleName()).orElse(null)
-			+ "_" + context.getTestMethod().map(method -> method.getName()).orElse(null));
-
-//		Class<?> testClass = context.getTestClass().orElseThrow(() -> new IllegalStateException("No test class"));
-//		Method testMethod = context.getTestMethod().orElseThrow(() -> new IllegalStateException("No test method"));
-//		testInfo.set(new SimpleTestInfo(testClass, testMethod.getName()));
+		Class<?> testClass = context.getTestClass().orElseThrow(() -> new IllegalStateException("No test class"));
+		Method testMethod = context.getTestMethod().orElseThrow(() -> new IllegalStateException("No test method"));
+		testInfo.set(new SimpleTestInfo(testClass, testMethod.getName()));
 	}
 
 	@Override
 	public void afterEach(ExtensionContext context) {
-		currentTestName.remove();
-
-//		testInfo.remove();
+		testInfo.remove();
 	}
 
 	protected static String getTestName() {
-		if(currentTestName.get() == null){
+		if(testInfo.get() == null){
 			throw new IllegalStateException("\nAssertDiff:\n\tCould not resolve the name of this test. Please annotate your test class with: @ExtendWith(AssertDiff.class)");
-		}else {
-			return currentTestName.get();
 		}
 
-//		Class<?> testClass = testInfo.get().getClass();
-//		String testMethodName = testInfo.get().methodName;
-//		return TestNameUtils.getTestName(testClass, testMethodName);
+		Class<?> testClass = testInfo.get().getTestClass();
+		String testMethodName = testInfo.get().getMethodName();
+		return TestNameUtils.getTestName(testClass, testMethodName);
 	}
 
 	static final ObjectMapper DEFAULT_OBJECT_MAPPER = JsonMapper.builder()

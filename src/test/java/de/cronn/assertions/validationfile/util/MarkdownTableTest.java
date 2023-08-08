@@ -5,12 +5,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.List;
 
+import de.cronn.assertions.validationfile.AssertDiff;
+
 import org.junit.jupiter.api.Test;
 
 import de.cronn.assertions.validationfile.FileExtensions;
-import de.cronn.assertions.validationfile.junit5.JUnit5ValidationFileAssertions;
 
-class MarkdownTableTest implements JUnit5ValidationFileAssertions {
+import org.junit.jupiter.api.extension.ExtendWith;
+
+@ExtendWith(AssertDiff.class)
+class MarkdownTableTest {
 
 	@Test
 	void shouldBuildMarkdownInManyWays() {
@@ -29,7 +33,7 @@ class MarkdownTableTest implements JUnit5ValidationFileAssertions {
 
 		markdownTable.addRow("Mr", "Albert", "Barker", "Barker Insulation Services Ltd");
 
-		assertWithFile(markdownTable.toString(), FileExtensions.MD);
+		AssertDiff.assertWithSnapshot(markdownTable.toString(), FileExtensions.MD);
 	}
 
 	@Test

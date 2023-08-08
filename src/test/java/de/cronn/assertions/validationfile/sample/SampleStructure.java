@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.Random;
 import java.util.UUID;
 
-class SampleStructure {
+public class SampleStructure {
 
 	private String name;
 	private String messageId;
