@@ -23,6 +23,10 @@ java {
 }
 
 dependencies {
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+	implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.2'
+
+
 	junit5SupportImplementation "org.junit.jupiter:junit-jupiter-api:latest.release"
 	api "com.googlecode.java-diff-utils:diffutils:latest.release"
 	api "org.opentest4j:opentest4j:latest.release"

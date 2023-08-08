@@ -3,27 +3,7 @@
 [![Apache 2.0](https://img.shields.io/github/license/cronn/validation-file-assertions.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Valid Gradle Wrapper](https://github.com/cronn/validation-file-assertions/workflows/Validate%20Gradle%20Wrapper/badge.svg)](https://github.com/cronn/validation-file-assertions/actions/workflows/gradle-wrapper-validation.yml)
 
-
-### TODOs:
-
-[x] Refactor ValidationFileAssertions interface into AssertDiff static class  
-[ ] change package name from `de.cronn.assertions.validationfile` to `de.cronn.assertdiff`  
-[ ] AssertDiff should be a static builder with configuration methods (withName, withNameSuffix, withOutputDir, withOutputActualDir, withOutputExpectedDir, withFieldMasking(json field masker), withMasking(regex masker))  
-[ ] custom output file name  
-[ ] configure your own object mapper  
-[ ] configure date time serialization format
-[ ] configure location of output files  
-[ ] choose way to serialize json(default), xml or csv (add custom serializer)  
-[ ] change naming for normalizers, (field masking?)  
-[ ] change directories `output` to `actual` and `validation` to `expected`  
-[ ] ability to disable globally defined masker for specific test case (in some cases we do want to validate `MASKED_ID/MASKED_DATE`)  
-[ ] do something with FileExtension - ability to add new extensions? Or modify method to accept extension as a String and not this FileExtension enum  
-[ ] give ability to access default object mapper from outside (to use it for other things in tests)  
-[ ] readme should have masking usage examples  
-[ ] readme should have creating custom mask and usage example  
-[ ] first run should fail with error message: `"First test run of <test name> - created snapshot: <file path>".` Snapshot should not have this part: `-=== new file \"data/test/validation/file.txt\" ===\n"`
-
-
+# "validation-file-assertions" – File Based Assertions for Java
 
 ### Idea shown by example
 
