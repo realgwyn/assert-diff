@@ -6,12 +6,12 @@ import java.util.stream.Collectors;
 
 import org.junit.platform.commons.util.ReflectionUtils;
 
-final class DummySerializer {
+public class DummySerializer {
 
 	private DummySerializer() {
 	}
 
-	static String toCsvString(Object obj) {
+	public static String toCsvString(Object obj) {
 		Map<String, Object> properties = properties(obj);
 		String header = String.join(",", properties.keySet());
 		String values = properties.values().stream()
@@ -20,13 +20,13 @@ final class DummySerializer {
 		return header + "\n" + values;
 	}
 
-	static String toJsonString(Object obj) {
+	public static String toJsonString(Object obj) {
 		return properties(obj).entrySet().stream()
 			.map(entry -> String.format("\"%s\" : \"%s\"", entry.getKey(), entry.getValue()))
 			.collect(Collectors.joining(",\n", "{\n", "\n}"));
 	}
 
-	static String toXmlString(Object obj) {
+	public static String toXmlString(Object obj) {
 		String className = obj.getClass().getSimpleName();
 		return properties(obj).entrySet().stream()
 			.map(entry -> String.format("<%1$s>%2$s</%1$s>", entry.getKey(), entry.getValue()))

@@ -33,7 +33,7 @@ class MarkdownTableTest {
 
 		markdownTable.addRow("Mr", "Albert", "Barker", "Barker Insulation Services Ltd");
 
-		AssertDiff.assertWithSnapshot(markdownTable.toString(), FileExtensions.MD);
+		AssertDiff.fileExtension(FileExtensions.MD).assertWithSnapshot(markdownTable.toString());
 	}
 
 	@Test

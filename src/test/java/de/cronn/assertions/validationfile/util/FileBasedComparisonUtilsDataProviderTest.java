@@ -26,18 +26,16 @@ class FileBasedComparisonUtilsDataProviderTest {
 	@ParameterizedTest
 	@ValueSource(strings = { "one!", "t \nw*o+" })
 	void shouldCheckAgainstValidationFile(String input) {
-		AssertDiff.assertWithSnapshotWithSuffix(
-			input,
-			input
-		);
+		AssertDiff.suffix(input)
+			.assertWithSnapshot(input);
 	}
 
 	@ParameterizedTest
 	@MethodSource("objectDataProvider")
 	void shouldCheckAgainstValidationFile(String input, Object secondValue) {
-		AssertDiff.assertWithSnapshotWithSuffix(
-			String.format("%sX%s", input, secondValue),
-			input + "_" + secondValue
+		AssertDiff.suffix(input + "_" + secondValue)
+			.assertWithSnapshot(
+			String.format("%sX%s", input, secondValue)
 		);
 	}
 

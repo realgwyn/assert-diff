@@ -9,7 +9,9 @@ TODO[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.cronn/
 [x] Refactor ValidationFileAssertions interface into AssertDiff static class  
 [x] Fix all tests  
 [ ] change package name from `de.cronn.assertions.validationfile` to `de.cronn.assertdiff`  
-[ ] AssertDiff should be a static builder with configuration methods (withName, withNameSuffix, withOutputDir, withOutputActualDir, withOutputExpectedDir, withFieldMasking(json field masker), withMasking(regex masker))  
+[x] AssertDiff should be a static builder with configuration methods (withName, withNameSuffix, withOutputDir, withOutputActualDir, withOutputExpectedDir, withFieldMasking(json field masker), withMasking(regex masker))  
+[ ] Create global configuration
+[ ] Create test class level configuration
 [ ] custom output file name  
 [ ] configure your own object mapper  
 [ ] configure date time serialization format
