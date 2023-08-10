@@ -9,7 +9,7 @@ TODO[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.cronn/
 [x] Fix all tests  
 [ ] change package name from `de.cronn.assertions.validationfile` to `de.cronn.assertdiff`  
 [x] AssertDiff should be a static builder with configuration methods (withName, withNameSuffix, withOutputDir, withOutputActualDir, withOutputExpectedDir, withFieldMasking(json field masker), withMasking(regex masker))  
-[ ] Create global configuration
+[x] Create global configuration
 [ ] Create test class level configuration
 [x] configure your own object mapper  
 [ ] configure date time serialization format

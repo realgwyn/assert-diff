@@ -1,5 +1,7 @@
 package de.cronn.assertions.validationfile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import de.cronn.assertions.validationfile.normalization.ValidationNormalizer;
 import de.cronn.assertions.validationfile.serialization.JsonSerializer;
 import de.cronn.assertions.validationfile.serialization.ObjectSerializer;
@@ -13,21 +15,28 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 
 import java.lang.reflect.Method;
 
+import static de.cronn.assertions.validationfile.AssertDiffConfig.*;
+
 public class AssertDiff implements BeforeEachCallback, AfterEachCallback {
+
+	public static final AssertDiffConfig DEFAULT_CONFIG = new AssertDiffConfig();
+
+	private static AssertDiffConfig globalConfig = DEFAULT_CONFIG;
 
 	private static ThreadLocal<SimpleTestInfo> testInfo = ThreadLocal.withInitial(() -> null);
 
-	private static final String DEFAULT_SUFFIX = "";
-	private static final ValidationNormalizer DEFAULT_VALIDATION_NORMALIZER = null;
-	private static final ObjectSerializer DEFAULT_OBJECT_SERIALIZER = new JsonSerializer();
-	private static final FileExtension DEFAULT_EXTENSION = FileExtensions.TXT;
-
 	public static void assertWithSnapshot(Object object) {
-		AssertDiff.assertWithSnapshot(DEFAULT_OBJECT_SERIALIZER.serialize(object), getValidationFileName(getTestName(), DEFAULT_SUFFIX, DEFAULT_OBJECT_SERIALIZER.getFileExtension()), DEFAULT_VALIDATION_NORMALIZER);
+		AssertDiff.assertWithSnapshot(globalConfig.getObjectSerializer().serialize(object),
+			getValidationFileName(getTestName(), globalConfig.getSuffix(),
+				globalConfig.getFileExtension() != null ? globalConfig.getFileExtension() : globalConfig.getObjectSerializer().getFileExtension()),
+			globalConfig.getValidationNormalizer());
 	}
 
 	public static void assertWithSnapshot(String actualString) {
-		AssertDiff.assertWithSnapshot(actualString, getValidationFileName(getTestName(), DEFAULT_SUFFIX, DEFAULT_EXTENSION), DEFAULT_VALIDATION_NORMALIZER);
+		AssertDiff.assertWithSnapshot(actualString,
+			getValidationFileName(getTestName(), globalConfig.getSuffix(),
+				globalConfig.getFileExtension() != null ? globalConfig.getFileExtension() : DEFAULT_FILE_EXTENSION),
+			globalConfig.getValidationNormalizer());
 	}
 
 	public static void assertWithSnapshot(String actualString, String suffix, String fileExtension, ValidationNormalizer normalizer) {
@@ -78,6 +87,10 @@ public class AssertDiff implements BeforeEachCallback, AfterEachCallback {
 		Class<?> testClass = testInfo.get().getTestClass();
 		String testMethodName = testInfo.get().getMethodName();
 		return TestNameUtils.getTestName(testClass, testMethodName);
+	}
+
+	public static void configure(AssertDiffConfig globalConfig) {
+		AssertDiff.globalConfig = globalConfig;
 	}
 
 	public static String getValidationFileName(String baseName, String suffix, FileExtension extension) {
