@@ -1,9 +1,6 @@
 package de.cronn.assertions.validationfile;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import de.cronn.assertions.validationfile.normalization.ValidationNormalizer;
-import de.cronn.assertions.validationfile.serialization.JsonSerializer;
 import de.cronn.assertions.validationfile.serialization.ObjectSerializer;
 import de.cronn.assertions.validationfile.util.FileBasedComparisonUtils;
 
@@ -27,24 +24,28 @@ public class AssertDiff implements BeforeEachCallback, AfterEachCallback {
 
 	public static void assertWithSnapshot(Object object) {
 		AssertDiff.assertWithSnapshot(globalConfig.getObjectSerializer().serialize(object),
-			getValidationFileName(getTestName(), globalConfig.getSuffix(),
+			globalConfig.getFileName() != null ? globalConfig.getFileName() : resolveValidationFileName(getTestName(), globalConfig.getSuffix(),
 				globalConfig.getFileExtension() != null ? globalConfig.getFileExtension() : globalConfig.getObjectSerializer().getFileExtension()),
 			globalConfig.getValidationNormalizer());
 	}
 
 	public static void assertWithSnapshot(String actualString) {
 		AssertDiff.assertWithSnapshot(actualString,
-			getValidationFileName(getTestName(), globalConfig.getSuffix(),
+			globalConfig.getFileName() != null ? globalConfig.getFileName() : resolveValidationFileName(getTestName(), globalConfig.getSuffix(),
 				globalConfig.getFileExtension() != null ? globalConfig.getFileExtension() : DEFAULT_FILE_EXTENSION),
 			globalConfig.getValidationNormalizer());
 	}
 
 	public static void assertWithSnapshot(String actualString, String suffix, String fileExtension, ValidationNormalizer normalizer) {
-		AssertDiff.assertWithSnapshot(actualString, getValidationFileName(getTestName(), suffix, fileExtension), normalizer);
+		AssertDiff.assertWithSnapshot(actualString, resolveValidationFileName(getTestName(), suffix, fileExtension), normalizer);
 	}
 
 	public static void assertWithSnapshot(String actualOutput, String filename, ValidationNormalizer normalizer) {
 		FileBasedComparisonUtils.compareActualWithFileHidden(actualOutput, filename, normalizer);
+	}
+
+	public static AssertDiffConfig fileName(String fileName){
+		return new AssertDiffConfig().fileName(fileName);
 	}
 
 	public static AssertDiffConfig fileExtension(FileExtension fileExtension) {
@@ -93,18 +94,18 @@ public class AssertDiff implements BeforeEachCallback, AfterEachCallback {
 		AssertDiff.globalConfig = globalConfig;
 	}
 
-	public static String getValidationFileName(String baseName, String suffix, FileExtension extension) {
-		return getValidationFileName(baseName, suffix, extension.asString());
+	public static String resolveValidationFileName(String baseName, String suffix, FileExtension extension) {
+		return resolveValidationFileName(baseName, suffix, extension.asString());
 	}
 
-	public static String getValidationFileName(String baseName, String suffix, String extension) {
+	public static String resolveValidationFileName(String baseName, String suffix, String extension) {
 		if (suffix == null || suffix.isEmpty()) {
-			return getValidationFileName(baseName, extension);
+			return resolveValidationFileName(baseName, extension);
 		}
-		return getValidationFileName(baseName + "_" + suffix, extension);
+		return resolveValidationFileName(baseName + "_" + suffix, extension);
 	}
 
-	public static String getValidationFileName(String baseName, String extension) {
+	public static String resolveValidationFileName(String baseName, String extension) {
 		return baseName + "." + extension;
 	}
 

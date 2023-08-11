@@ -17,12 +17,12 @@ public class ValidationFilesTestHelper extends CleanupValidationFilesAfterAllTes
 
 	public void copyOutputToValidation(String validationFileName) throws IOException {
 		Path source = TestData.outputPath(validationFileName);
-		Path target = TestData.validationFilePath(validationFileName);
+		Path target = TestData.snapshotFilePath(validationFileName);
 		Files.copy(source, target, StandardCopyOption.REPLACE_EXISTING);
 	}
 
 	public List<String> linesDiffOutputValidation(String validationFileName) throws IOException {
-		return linesDiff(TestData.outputPath(validationFileName), TestData.validationFilePath(validationFileName));
+		return linesDiff(TestData.outputPath(validationFileName), TestData.snapshotFilePath(validationFileName));
 	}
 
 	public List<String> linesDiff(Path path1, Path path2) throws IOException {

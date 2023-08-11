@@ -4,9 +4,13 @@ import de.cronn.assertions.validationfile.normalization.ValidationNormalizer;
 import de.cronn.assertions.validationfile.serialization.JsonSerializer;
 import de.cronn.assertions.validationfile.serialization.ObjectSerializer;
 
+import static de.cronn.assertions.validationfile.AssertDiff.*;
+
 public class AssertDiffConfig {
 
 	protected static final String DEFAULT_FILE_EXTENSION = FileExtensions.TXT.asString();
+
+	private String fileName = null;
 	private String fileExtension = null;
 	private String suffix = "";
 	private ValidationNormalizer validationNormalizer = null;
@@ -37,6 +41,14 @@ public class AssertDiffConfig {
 		return this;
 	}
 
+	public AssertDiffConfig fileName(String fileName) {
+		this.fileName = fileName;
+		return this;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
 	public String getFileExtension() {
 		return fileExtension;
 	}
@@ -54,10 +66,14 @@ public class AssertDiffConfig {
 	}
 
 	public void assertWithSnapshot(Object object) {
-		AssertDiff.assertWithSnapshot(objectSerializer.serialize(object), suffix, fileExtension != null ? fileExtension : objectSerializer.getFileExtension(), validationNormalizer);
+		AssertDiff.assertWithSnapshot(objectSerializer.serialize(object),
+			fileName != null ? fileName : resolveValidationFileName(getTestName(), suffix, fileExtension != null ? fileExtension: objectSerializer.getFileExtension()),
+			validationNormalizer);
 	}
 
 	public void assertWithSnapshot(String actualString) {
-		AssertDiff.assertWithSnapshot(actualString, suffix, fileExtension != null ? fileExtension : DEFAULT_FILE_EXTENSION, validationNormalizer);
+		AssertDiff.assertWithSnapshot(actualString,
+			fileName != null ? fileName : resolveValidationFileName(getTestName(), suffix, fileExtension != null ? fileExtension : DEFAULT_FILE_EXTENSION),
+			validationNormalizer);
 	}
 }

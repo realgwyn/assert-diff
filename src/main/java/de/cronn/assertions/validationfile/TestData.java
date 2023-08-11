@@ -29,7 +29,7 @@ public final class TestData {
 
 	}
 
-	public static Path validationFilePath(String fileName) {
+	public static Path snapshotFilePath(String fileName) {
 		assertFilenameHasText(fileName);
 		return TestData.TEST_VALIDATION_DATA_DIR.resolve(fileName);
 	}

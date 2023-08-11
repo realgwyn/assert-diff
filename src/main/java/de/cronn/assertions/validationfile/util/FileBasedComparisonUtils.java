@@ -13,6 +13,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 import de.cronn.assertions.validationfile.FileBasedComparisonFailure;
+import de.cronn.assertions.validationfile.MissingSnapshotException;
 import de.cronn.assertions.validationfile.TestData;
 import de.cronn.assertions.validationfile.normalization.ValidationNormalizer;
 
@@ -35,9 +36,9 @@ public final class FileBasedComparisonUtils {
 		writeTmp(actualOutput, fileNameRawFile);
 		String normalizedOutput = normalizer != null ? normalizer.normalize(actualOutput) : actualOutput;
 		String normalizedActual = normalizeLineEndings(normalizedOutput);
-		prefillIfNecessary(fixedFilename, normalizedActual);
-		String expected = readValidationFile(fixedFilename);
 		writeOutput(normalizedActual, fixedFilename);
+		createSnapshotIfMissing(fixedFilename, normalizedActual);
+		String expected = readValidationFile(fixedFilename);
 		assertEquals(expected, normalizedActual, fixedFilename, fixedFilename);
 	}
 
@@ -65,7 +66,7 @@ public final class FileBasedComparisonUtils {
 	}
 
 	public static String readValidationFile(String fileName) {
-		return read(TestData.validationFilePath(fileName));
+		return read(TestData.snapshotFilePath(fileName));
 	}
 
 	private static String read(Path validation) {
@@ -76,14 +77,12 @@ public final class FileBasedComparisonUtils {
 		}
 	}
 
-	public static boolean prefillIfNecessary(String fileName, String normalizedActual) {
-		Path validationFile = TestData.validationFilePath(fileName);
-		if (!validationFile.toFile().exists() && normalizedActual != null) {
-			String header = NEW_FILE_HEADER_PREFIX + validationFile + NEW_FILE_HEADER_SUFFIX;
-			write(header + normalizedActual, validationFile);
-			return true;
+	public static void createSnapshotIfMissing(String fileName, String normalizedActual) {
+		Path snapshotFile = TestData.snapshotFilePath(fileName);
+		if (!snapshotFile.toFile().exists() && normalizedActual != null) {
+			write(normalizedActual, snapshotFile);
+			throw new MissingSnapshotException(String.format("Snapshot doesn't exist at %s, writing actual.", snapshotFile));
 		}
-		return false;
 	}
 
 	public static void writeOutput(String actual, String fileName) {

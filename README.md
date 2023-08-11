@@ -10,7 +10,7 @@ TODO[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.cronn/
 [ ] change package name from `de.cronn.assertions.validationfile` to `de.cronn.assertdiff`  
 [x] AssertDiff should be a static builder with configuration methods (withName, withNameSuffix, withOutputDir, withOutputActualDir, withOutputExpectedDir, withFieldMasking(json field masker), withMasking(regex masker))  
 [x] Create global configuration
-[ ] Create test class level configuration
+[ ] Create test class level configuration - create test case showing how to do it 
 [x] configure your own object mapper  
 [ ] configure date time serialization format
 [ ] configure location of output files  
@@ -22,8 +22,8 @@ TODO[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.cronn/
 [ ] give ability to access default object mapper from outside (to use it for other things in tests)  
 [ ] readme should have masking usage examples  
 [ ] readme should have creating custom mask and usage example  
-[ ] first run should fail with error message: `"First test run of <test name> - created snapshot: <file path>".` Snapshot should not have this part: `-=== new file \"data/test/validation/file.txt\" ===\n"`
-
+[x] first run should fail with error message: `"First test run of <test name> - created snapshot: <file path>".` Snapshot should not have this part: `-=== new file \"data/test/validation/file.txt\" ===\n"`
+[x] Be able to change snapshot file name completly (override extension, sufix, test class name etc.)
 
 ## New awesome features
 
@@ -33,16 +33,17 @@ You no longer need to declare and configure your own ObjectMapper if you want to
 **Configure stuff that was not configurable before**  
 Those properties can be now also configured [globally](#global-config), on [test class level](#test-class-config) or even [inline](#inline-config) for current assertion only.
 
-| Option                             | Default value          | Description                                                         |
-|------------------------------------|------------------------|---------------------------------------------------------------------|
-| `outputDir(File)`                  | `data/test`            | Directory where  snapshots are saved                                |
-| `actualSnapshotDir(File)`          | `data/test/actual`     | Directory where actual snapshot is saved                            |
-| `expectedSnapshotDir(File)`        | `data/test/expected`   | Directory where expected snapshot is saved                          |
-| `withSerializer(ObjectSerializer)` | `jackson ObjectMapper` | Configure custom `Object` to `String` [serializer](#serializers.md) |
-| `withFieldMasking(FieldMasking)`   | N/A                    | Configure [field masking](#field-masking.md)                        |
-| `withMasking(Masking)`             | N/A                    |                                                                     |
-| `withFileSuffix(String)`           | N/A                    | Append [custom suffix](#file-name-suffix) to snapshots              |
-| `withFileExtension(String)`        | `.txt`                 | Set file extension (Default: `.txt`)                                |
+| Option                             | Default value          | Description                                                                                           |
+|------------------------------------|------------------------|-------------------------------------------------------------------------------------------------------|
+| `outputDir(File)`                  | `data/test`            | Directory where snapshots are saved                                                                   |
+| `actualSnapshotDir(File)`          | `data/test/actual`     | Directory where actual snapshot is saved                                                              |
+| `expectedSnapshotDir(File)`        | `data/test/expected`   | Directory where expected snapshot is saved                                                            |
+| `withSerializer(ObjectSerializer)` | `jackson ObjectMapper` | Configure custom `Object` to `String` [serializer](#serializers.md)                                   |
+| `withFieldMasking(FieldMasking)`   | N/A                    | Configure [field masking](#field-masking.md)                                                          |
+| `withMasking(Masking)`             | N/A                    |                                                                                                       |
+| `withFileSuffix(String)`           | N/A                    | Append [custom suffix](#file-name-suffix) to snapshots files                                          |
+| `withFileExtension(String)`        | `.txt`                 | Set snapshot file extension (Default: `.txt`)                                                         |
+| `withFileName(String)`             | N/A                    | Configure snapshot file name (_Notice: This option overrides `suffix` and `extension` configuration_) |
 
 ## New readme
 Main goal here was to focus on explaining validating with files concept and show use cases and adventages comaring to junit/assertj usages  
@@ -57,8 +58,35 @@ Our best people at API UX and marketing department decided to spice things up a 
 * `validation file` term is now `snapshot`  
 * Changed directories `output` to `actual` and `validation` to `expected`  
 * Main entry method `assertWithFile()` is now named `assertSnapshot()`
-* `Normalizer` was renamed to `Masking`
+* `Normalizer` was renamed to `IgnoreField`
 * Package name `de.cronn.assertions.validationfile` is changed to `de.cronn.assertdiff`
+
+
+## Guides
+
+[Quick Start](#quick-start)
+
+
+
+
+## Quick Start
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
