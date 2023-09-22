@@ -22,7 +22,7 @@ public class SampleStructure {
 		return sampleStructure;
 	}
 
-	public static SampleStructure filledWithRandomValues() {
+	public static SampleStructure filledWithChangingValues() {
 		SampleStructure sampleStructure = new SampleStructure();
 		sampleStructure.setName("Lorem ipsum");
 		sampleStructure.setMessageId(UUID.randomUUID().toString());

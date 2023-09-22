@@ -3,27 +3,56 @@ TODO[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.cronn/
 [![Apache 2.0](https://img.shields.io/github/license/cronn/validation-file-assertions.svg)](http://www.apache.org/licenses/LICENSE-2.0)
 [![Valid Gradle Wrapper](https://github.com/cronn/validation-file-assertions/workflows/Validate%20Gradle%20Wrapper/badge.svg)](https://github.com/cronn/validation-file-assertions/actions/workflows/gradle-wrapper-validation.yml)
 
+
+### Quick intro
+
+Are just tired of writing asserts each value:
+```java
+// junit code with like +10 lines of asserting single pojo
+```
+Look no further, AssertSnapshot is here to help:
+```java
+// usage of assert snapshot
+```
+On the first test run it will generate json snapshot representation of your object:
+```json
+{
+   TODO
+}
+```
+Now, you only need to set expected values, and you are done!
+From now on AssertSnapshot will fail the test if expected fields are not matching:
+```shell
+# bash test fail output
+```
+You can also diff actual and expected snapshots with your tool of choice. Actual snapshots are located in `build/test/assert-snapshot` directory.
+TODO [SCREENSHOT]
+
+TODO: [webm with basic AssertDiff workflow]
+
 ### TODOs:
 
-[x] Refactor ValidationFileAssertions interface into AssertDiff static class  
-[x] Fix all tests  
-[ ] change package name from `de.cronn.assertions.validationfile` to `de.cronn.assertdiff`  
-[x] AssertDiff should be a static builder with configuration methods (withName, withNameSuffix, withOutputDir, withOutputActualDir, withOutputExpectedDir, withFieldMasking(json field masker), withMasking(regex masker))  
-[x] Create global configuration
-[ ] Create test class level configuration - create test case showing how to do it 
-[x] configure your own object mapper  
-[ ] configure date time serialization format
-[ ] configure location of output files  
-[x] choose way to serialize json(default), xml or csv (add custom serializer)  
-[ ] change naming for normalizers, (field masking?)  
-[ ] change directories `output` to `actual` and `validation` to `expected`  
-[ ] ability to disable globally defined masker for specific test case (in some cases we do want to validate `MASKED_ID/MASKED_DATE`)  
-[x] do something with FileExtension - ability to add new extensions? Or modify method to accept extension as a String and not this FileExtension enum  
-[ ] give ability to access default object mapper from outside (to use it for other things in tests)  
-[ ] readme should have masking usage examples  
-[ ] readme should have creating custom mask and usage example  
-[x] first run should fail with error message: `"First test run of <test name> - created snapshot: <file path>".` Snapshot should not have this part: `-=== new file \"data/test/validation/file.txt\" ===\n"`
-[x] Be able to change snapshot file name completly (override extension, sufix, test class name etc.)
+- [ ] New name: AssertSnapshot?
+- [x] Refactor ValidationFileAssertions interface into AssertDiff static class  
+- [x] Fix all tests  
+- [ ] change package name from `de.cronn.assertions.validationfile` to `de.cronn.assertdiff`  
+- [x] AssertDiff should be a static builder with configuration methods (withName, withNameSuffix, withOutputDir, withOutputActualDir, withOutputExpectedDir, withFieldMasking(json field masker), withMasking(regex masker))  
+- [x] Create global configuration
+- [x] Create test class level configuration 
+- [x] configure your own object mapper  
+- [ ] configure date time serialization format
+- [ ] configure location of output files  
+- [x] choose way to serialize json(default), xml or csv (add custom serializer)  
+- [ ] change naming for normalizers, (field masking?)  
+- [ ] change directories `output` to `actual` and `validation` to `expected`  
+- [ ] ability to disable globally defined masker for specific test case (in some cases we do want to validate `MASKED_ID/MASKED_DATE`)  
+- [x] do something with FileExtension - ability to add new extensions? Or modify method to accept extension as a String and not this FileExtension enum  
+- [ ] give ability to access default object mapper from outside (to use it for other things in tests)  
+- [ ] readme should have masking usage examples  
+- [ ] readme should have creating custom mask and usage example  
+- [x] first run should fail with error message: `"First test run of <test name> - created snapshot: <file path>".` Snapshot should not have this part: `-=== new file \"data/test/validation/file.txt\" ===\n"`
+- [x] Be able to change snapshot file name completly (override extension, sufix, test class name etc.)
+- [ ] actual snapshot files by default should be located in build folder (which is ignored by the git, so the user don't have to play around with .gitignore file)
 
 ## New awesome features
 

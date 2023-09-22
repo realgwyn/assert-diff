@@ -38,7 +38,7 @@ public class AssertDiffTest_Workflow {
 			() -> AssertDiff.fileName("AssertDiff_workflow.txt").assertWithSnapshot("Actual content."));
 
 		// Then
-		assertThat(error).hasMessage("Snapshot doesn't exist at data/test/validation/AssertDiff_workflow.txt, writing actual.");
+		assertThat(error).hasMessage("Snapshot doesn't exist at data/test/validation/AssertDiff_workflow.txt, saving actual snapshot as expected snapshot.");
 
 		assertThat(helper.collectAddedFiles()).containsExactlyInAnyOrder(
 			Paths.get("data/test/validation/AssertDiff_workflow.txt"),

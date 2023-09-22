@@ -42,7 +42,7 @@ class ValidationFileSampleTest {
 
 	@Test
 	void normalization_json() {
-		SampleStructure sampleStructure = SampleStructure.filledWithRandomValues();
+		SampleStructure sampleStructure = SampleStructure.filledWithChangingValues();
 
 		AssertDiff
 			.fileExtension(FileExtensions.JSON)
@@ -55,7 +55,7 @@ class ValidationFileSampleTest {
 
 	@Test
 	void normalization_xml() {
-		SampleStructure sampleStructure = SampleStructure.filledWithRandomValues();
+		SampleStructure sampleStructure = SampleStructure.filledWithChangingValues();
 
 		AssertDiff
 			.fileExtension(FileExtensions.XML)
@@ -68,7 +68,7 @@ class ValidationFileSampleTest {
 
 	@Test
 	void normalization_custom() {
-		SampleStructure sampleStructure = SampleStructure.filledWithRandomValues();
+		SampleStructure sampleStructure = SampleStructure.filledWithChangingValues();
 
 		AssertDiff
 			.validationNormalizer(ValidationNormalizer.combine(

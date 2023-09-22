@@ -2,6 +2,7 @@ package de.cronn.assertions.validationfile.util;
 
 import static de.cronn.assertions.validationfile.normalization.StringNormalizer.*;
 import static java.nio.file.StandardOpenOption.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -81,7 +82,7 @@ public final class FileBasedComparisonUtils {
 		Path snapshotFile = TestData.snapshotFilePath(fileName);
 		if (!snapshotFile.toFile().exists() && normalizedActual != null) {
 			write(normalizedActual, snapshotFile);
-			throw new MissingSnapshotException(String.format("Snapshot doesn't exist at %s, writing actual.", snapshotFile));
+			fail(String.format("Snapshot doesn't exist at %s, saving actual snapshot as expected snapshot.", snapshotFile));
 		}
 	}
 
